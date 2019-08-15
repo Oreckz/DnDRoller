@@ -2,24 +2,25 @@ package xyz.oreckz.dnd;
 
 
 public class NPC {
-    private final int armorClass;
-    private final int dc;
+    private int armorClass;
+    private int dc;
     private int hitMod;
+    private int hitPoints;
 
-    public NPC(int ac, int dc, int hitMod) {
+    public NPC(int ac, int dc, int hitMod, int hitPoints) {
         this.armorClass = ac;
         this.dc = dc;
         this.hitMod = hitMod;
+        this.hitPoints = hitPoints;
     }
 
     public int getArmorclass() {
-        int ac = armorClass;
+       final int ac = armorClass;
         return ac;
     }
-    
-    public int attackRoll() {
-        Dice dice = new Dice();
-        return dice.d20() + hitMod;
+
+    public void setArmorClass(int ac){
+        this.armorClass = ac;
     }
 
     public int getHitMod() {
@@ -27,4 +28,16 @@ public class NPC {
         return hm;
     }
 
+    public void setHitMod(int hm){
+        this.hitMod = hm;
+    }
+
+    public int getHitpoints(){
+        final int hp = hitPoints;
+        return hp;
+    }
+
+    public void setHitPoints(int hp){
+        this.hitPoints = hp;
+    }
 }
