@@ -3,19 +3,15 @@ package xyz.oreckz.dnd;
 import java.util.Random;
 
 public class Dice {
-    private final Random rand;
-    private final int faces;
+    private Random rand = new Random();
     private int result;
 
-
-    public Dice(int faces) {
-        this.rand = new Random();
-        this.faces = faces;
+    public Dice(Random rand, int faces) {
+        this.rand = rand;
     }
 
-    public int roll() {
-        return 1 + rand.nextInt(faces);
-    }
+    public Dice() {}
+
 
     public int d20(){
         result = rand.nextInt(20);

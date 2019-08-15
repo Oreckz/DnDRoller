@@ -1,30 +1,39 @@
 package xyz.oreckz.dnd;
 
-import sun.lwawt.macosx.CSystemTray;
-
 import java.util.Scanner;
+import java.io.Console;
+
 
 public class Main {
     public static void main(String[] args) {
+        System.out.println("Welcome to DNDRoller");
         Scanner input = new Scanner(System.in);
 
-        System.out.println("Dice Roller\n");
-        System.out.println("How many faces does the dice have?");
-        Dice dice = new Dice(input.nextInt());
-        int result = dice.d20();
-        System.out.println("\nThe dice rolled a " + result + ".");
+        Dice dice = new Dice();
+        int roll = dice.d20();
 
-        System.out.println("NPC AC");
-        System.out.println("What is the DC of the NPC?");
-        NPC npc = new NPC(input.nextInt());
-        int enemyAC = npc.armorClass();
-        System.out.println("NPC Armour Class is " + enemyAC);
+        System.out.println("\nThe dice rolled a " + roll + ".");
 
-        if (result >= enemyAC) {
+        Player player = new Player(5, 20);
+        NPC npc = new NPC(15, 10, 4);
+        System.out.println("NPC Armour Class is " + npc.getArmorclass());
+
+        if (roll + player.getHitMod() >= npc.getArmorclass()) {
             System.out.println("HIT");
         } else {
             System.out.println("MISS");
         }
+
+
+        int enemyRoll = npc.attackRoll();
+        System.out.println("Enemy Rolls " + enemyRoll);
+
+        if (enemyRoll + npc.getHitMod() >= player.getArmorClass()) {
+            System.out.println("HIT");
+        } else {
+            System.out.println("MISS");
+        }
+
 
     }
 }

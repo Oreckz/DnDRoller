@@ -1,18 +1,30 @@
 package xyz.oreckz.dnd;
 
-import java.util.Random;
 
 public class NPC {
-    private final Random ac;
+    private final int armorClass;
     private final int dc;
+    private int hitMod;
 
-    public NPC(int dc) {
-        this.ac = new Random();
+    public NPC(int ac, int dc, int hitMod) {
+        this.armorClass = ac;
         this.dc = dc;
+        this.hitMod = hitMod;
     }
 
-    public int armorClass(){
-        return 1 + ac.nextInt(dc);
+    public int getArmorclass() {
+        int ac = armorClass;
+        return ac;
+    }
+    
+    public int attackRoll() {
+        Dice dice = new Dice();
+        return dice.d20() + hitMod;
+    }
+
+    public int getHitMod() {
+        final int hm = hitMod;
+        return hm;
     }
 
 }
