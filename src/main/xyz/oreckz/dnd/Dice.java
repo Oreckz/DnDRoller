@@ -18,4 +18,9 @@ public class Dice {
         result = rand.nextInt(12);
         return result;
     }
+
+    public static int d10(){
+        result = rand.nextInt(10);
+        return result;
+    }
 }
