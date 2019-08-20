@@ -1,30 +1,39 @@
 package xyz.oreckz.dnd;
 
-import javax.rmi.ssl.SslRMIClientSocketFactory;
+import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class Main {
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
     public static void main(String[] args) {
-        Dice dice = new Dice();
         System.out.println("Welcome to DNDRoller");
 
-        Player player = new Player(5, 20, 20);
-        NPC npc = new NPC(15, 10, 4, 20);
+        Scanner scanner = new Scanner(System.in);
+
+        Player player  = new Player("Patrick", "Fighter", 4, 15,20 );
+        Actor npc = new Actor("NPC",12,12,20, 10);
+
+        System.out.println("Enter Player name: ");
+        player.setName(scanner.nextLine());
+        System.out.println("Player name is " + player.getName());
+
+
         System.out.println("Player AC is " + player.getArmorClass());
-        System.out.println("Player HP is " + player.getHitPoints());
-        System.out.println("Enemy AC is " + npc.getArmorclass());
-        System.out.println("Enemy HP is " + npc.getHitpoints());
+        System.out.println("Player HP is " + player.getHealth());
+        System.out.println("Enemy AC is " + npc.getArmorClass());
+        System.out.println("Enemy HP is " + npc.getHealth());
 
         int round = 1;
 
         while (true) {
-            final int npcHitPoints = npc.getHitpoints();
+            final int npcHitPoints = npc.getHealth();
             if (npcHitPoints <= 0){
-                System.out.println("Player wins");
+                System.out.println(player.getName() + " Wins!");
                 break;
             }
             final int playerHitPoints = player.getHitPoints();
             if (playerHitPoints <= 0){
-                System.out.println("NPC wins");
+                System.out.println(npc.getName() + " Wins!");
                 break;
             }
 
@@ -34,12 +43,12 @@ public class Main {
             System.out.println("The Player rolled a " + playerRoll + ".");
             System.out.println("The Player applies a Hit Modifier of " + player.getHitMod());
 
-            if (playerRoll + player.getHitMod() >= npc.getArmorclass()) {
+            if (playerRoll + player.getHitMod() >= npc.getArmorClass()) {
                 System.out.println("HIT");
-                npc.setHitPoints(npc.getHitpoints() - 5);
+                npc.setHealth(npc.getHealth() - player.damageRoll());
                 System.out.println("Enemy takes 5 points of damage");
             } else {
-                System.out.println("MISS against enemy AC of " + npc.getArmorclass());
+                System.out.println("MISS against enemy AC of " + npc.getArmorClass());
             }
 
 
@@ -49,14 +58,14 @@ public class Main {
 
             if (enemyRoll + npc.getHitMod() >= player.getArmorClass()) {
                 System.out.println("HIT");
-                player.setHitPoints(player.getHitPoints() - 5);
+                player.setHitPoints(player.getHitPoints() - npc.damageRoll());
                 System.out.println("Player takes 5 points of damage");
             } else {
                 System.out.println("MISS against Player AC of " + player.getArmorClass());
             }
 
             System.out.println("Player HP remaining " + player.getHitPoints());
-            System.out.println("Enemy HP remaining " + npc.getHitpoints());
+            System.out.println("Enemy HP remaining " + npc.getHealth());
             System.out.println("End of Turn");
         }
         System.out.println("End of Game");
